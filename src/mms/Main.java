@@ -32,6 +32,8 @@ public class Main {
                     ret = uc1.mainMenu();
                     break;
                 case 2:
+                    UC2UI uc2 = new UC2UI();
+                    ret = uc2.mainMenu();
                     break;
                 default:
                     return;
