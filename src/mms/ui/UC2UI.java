@@ -51,7 +51,11 @@ public class UC2UI {
                     retVal = editForm(Main.root.getTeamMember(id));
                     break;
                 case 4:
-                    //retVal = delete();
+                    int idToDelete;
+                    idToDelete = Main.console.waitInt("Give the ID of Team Member to delete: \n", "Invalid ID given!");
+                    Main.root.deleteTeamMember(idToDelete);
+                    Main.console.writeLn("\n### Team Member deleted! ###\n");
+                    retVal = 0;
                     break;
                 case 0:
                 default:
@@ -152,7 +156,7 @@ public class UC2UI {
 
         Main.root.addOrChangeTeamMember(id, name, timeSlots);
 
-        Main.console.writeLn("\n### Team Member added with ID: " + id + "###\n");
+        Main.console.writeLn("\n### Team Member added with ID: " + id + " ###\n");
 
         return 0;
     }
@@ -175,7 +179,7 @@ public class UC2UI {
 
         Main.root.addOrChangeTeamMember(teamMember.getId(), name, timeSlots);
 
-        Main.console.writeLn("\n### Team Member updated with ID: " + teamMember.getId() + "###\n");
+        Main.console.writeLn("\n### Team Member updated with ID: " + teamMember.getId() + " ###\n");
 
         return 0;
     }
