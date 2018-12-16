@@ -1,5 +1,7 @@
 package mms.model;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TeamMember implements java.io.Serializable {
@@ -8,6 +10,10 @@ public class TeamMember implements java.io.Serializable {
     private String name;
     private List<TimeSlot> timeSlots;
 
+    public TeamMember(int id) {
+        this.id = id;
+    }
+    
     public TeamMember(int id, String name, List<TimeSlot> timeSlots) {
         this.id = id;
         this.name = name;
@@ -36,5 +42,13 @@ public class TeamMember implements java.io.Serializable {
 
     public void addTimeSlot(TimeSlot timeslot) {
         this.timeSlots.add(timeslot);
+    }
+    
+    public List<Date[]> getTimeSlotsAsDate() {
+        List<Date[]> dates = new ArrayList<>();
+        for (TimeSlot ts : timeSlots) {
+            dates.add(new Date[]{ts.getBeginTime(), ts.getEndTime()});
+        }
+        return dates;
     }
 }
