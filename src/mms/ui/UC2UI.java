@@ -39,12 +39,12 @@ public class UC2UI {
                 case 3:
                     int id;
                     id = Main.console.waitInt("Give the ID of Team Member to edit: \n", "Invalid ID given!");
-                    retVal = editForm(Main.root.getTeamMember(id));
+                    retVal = editForm(Main.controller.getTeamMember(id));
                     break;
                 case 4:
                     int idToDelete;
                     idToDelete = Main.console.waitInt("Give the ID of Team Member to delete: \n", "Invalid ID given!");
-                    Main.root.deleteTeamMember(idToDelete);
+                    Main.controller.deleteTeamMember(idToDelete);
                     Main.console.println("\n### Team Member deleted! ###\n");
                     retVal = 0;
                     break;
@@ -66,7 +66,7 @@ public class UC2UI {
             sb.append(" > Manage Team Members > List Team Members\n");
             sb.append("-----------------------------\n");
 
-            Map<Integer, TeamMember> teamMembers = Main.root.getTeamMembers();
+            Map<Integer, TeamMember> teamMembers = Main.controller.getTeamMembers();
             for (Map.Entry<Integer, TeamMember> item : teamMembers.entrySet()) {
                 sb.append(String.format("%3d. %-15s\n", item.getKey(), item.getValue().getName()));
                 validEntries.add(item.getKey());
@@ -124,7 +124,7 @@ public class UC2UI {
                     retVal = 0;
                     break;
                 case 2:
-                    Main.root.deleteTeamMember(teamMember.getId());
+                    Main.controller.deleteTeamMember(teamMember.getId());
                     Main.console.println("\n### Team Member deleted! ###\n");
                     retVal = 0;
                     break;
@@ -145,7 +145,7 @@ public class UC2UI {
         showTimeSlotsForm();
         List<Date[]> timeSlots = getTimeSlots();
 
-        Main.root.addOrChangeTeamMember(id, name, timeSlots);
+        Main.controller.addOrChangeTeamMember(id, name, timeSlots);
 
         Main.console.println("\n### Team Member added with ID: " + id + " ###\n");
 
@@ -168,7 +168,7 @@ public class UC2UI {
             timeSlots = teamMember.getTimeSlotsAsDate();
         }
 
-        Main.root.addOrChangeTeamMember(teamMember.getId(), name, timeSlots);
+        Main.controller.addOrChangeTeamMember(teamMember.getId(), name, timeSlots);
 
         Main.console.println("\n### Team Member updated with ID: " + teamMember.getId() + " ###\n");
 

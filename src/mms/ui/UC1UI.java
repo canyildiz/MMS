@@ -45,7 +45,7 @@ public class UC1UI {
                     + " > Manage Equipments > List Equipments\n"
                     + "-----------------------------\n";
 
-            Map<Integer, Equipment> equipments = Main.root.getEquipments();
+            Map<Integer, Equipment> equipments = Main.controller.getEquipments();
             for (Map.Entry<Integer, Equipment> equipment : equipments.entrySet()) {
                 list += String.format("%3d. %-15s\n", equipment.getKey(), equipment.getValue().getEquipmentName());
                 validEntries.add(equipment.getKey());
@@ -129,7 +129,7 @@ public class UC1UI {
             case -1:
                 return 0;
             case 1:
-                Main.root.deleteEquipment(equipment.getEquipmentID());
+                Main.controller.deleteEquipment(equipment.getEquipmentID());
                 Main.console.println("Deleted!");
                 return 0;
         }
@@ -172,7 +172,7 @@ public class UC1UI {
             lastErrorCode = Main.console.waitInt("\nLast Error Code:", "");
         }
 
-        Main.root.addOrChangeEquipment(Id, name, lastMaintenanceDate, lastErrorCode);
+        Main.controller.addOrChangeEquipment(Id, name, lastMaintenanceDate, lastErrorCode);
         if (equipment == null) {
             Main.console.println("### Created ###");
         } else {

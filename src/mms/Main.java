@@ -7,7 +7,7 @@ import mms.ui.*;
 public class Main {
 
     public static final String FILENAME = "mms.dat";
-    public static MMS root;
+    public static MMS controller;
     public static mms.ui.Console console = new mms.ui.Console();
 
     public static void main(String[] args) throws Exception {
@@ -44,17 +44,17 @@ public class Main {
     public static void loadRoot() throws Exception {
         File file = new File(FILENAME);
         if (!file.exists()) {
-            root = new MMS();
+            controller = new MMS();
         } else {
             try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(FILENAME))) {
-                root = (MMS) stream.readObject();
+                controller = (MMS) stream.readObject();
             }
         }
     }
 
     public static void saveRoot() throws Exception {
         try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
-            stream.writeObject(root);
+            stream.writeObject(controller);
         }
     }
 
