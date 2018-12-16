@@ -130,6 +130,7 @@ public class UC1UI {
                 return 0;
             case 1:
                 Main.root.deleteEquipment(equipment.getEquipmentID());
+                Main.console.println("Deleted!");
                 return 0;
         }
         return ret;
@@ -164,7 +165,7 @@ public class UC1UI {
                     + "-----------------------------\n"
                     + "Enter the required values regarding its data type\n"
                     + "(type * for keep the current values)\n");
-            
+
             Id = equipment.getEquipmentID();
             name = Main.console.waitStringOrEmpty("\nName (String):", "*", equipment.getEquipmentName());
             lastMaintenanceDate = Main.console.waitDate("\nLast Maintenance Date (Date in yyyy-mm-dd):\n", "yyyy-MM-dd", "", "*", equipment.getLastMaintenanceDate());
@@ -172,6 +173,11 @@ public class UC1UI {
         }
 
         Main.root.addOrChangeEquipment(Id, name, lastMaintenanceDate, lastErrorCode);
+        if (equipment == null) {
+            Main.console.println("### Created ###");
+        } else {
+            Main.console.println("### Edit Completed ###");
+        }
         return 0;
     }
 }

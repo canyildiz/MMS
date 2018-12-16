@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mms.ui;
 
 import java.text.SimpleDateFormat;
@@ -13,10 +8,6 @@ import java.util.Map;
 import mms.Main;
 import mms.model.TeamMember;
 
-/**
- *
- * @author canyildiz
- */
 public class UC2UI {
 
     private List<Date[]> timeSlotsAdded;
@@ -54,7 +45,7 @@ public class UC2UI {
                     int idToDelete;
                     idToDelete = Main.console.waitInt("Give the ID of Team Member to delete: \n", "Invalid ID given!");
                     Main.root.deleteTeamMember(idToDelete);
-                    Main.console.writeLn("\n### Team Member deleted! ###\n");
+                    Main.console.println("\n### Team Member deleted! ###\n");
                     retVal = 0;
                     break;
                 case 0:
@@ -134,7 +125,7 @@ public class UC2UI {
                     break;
                 case 2:
                     Main.root.deleteTeamMember(teamMember.getId());
-                    Main.console.writeLn("\n### Team Member deleted! ###\n");
+                    Main.console.println("\n### Team Member deleted! ###\n");
                     retVal = 0;
                     break;
             }
@@ -143,7 +134,7 @@ public class UC2UI {
     }
 
     private int addForm() {
-        Main.console.writeLn("\n > Manage Team Members > Add Team Member\n");
+        Main.console.println("\n > Manage Team Members > Add Team Member\n");
 
         int id;
         id = Main.console.waitInt("Team Member's ID?\n", "Invalid ID given!");
@@ -156,13 +147,13 @@ public class UC2UI {
 
         Main.root.addOrChangeTeamMember(id, name, timeSlots);
 
-        Main.console.writeLn("\n### Team Member added with ID: " + id + " ###\n");
+        Main.console.println("\n### Team Member added with ID: " + id + " ###\n");
 
         return 0;
     }
 
     private int editForm(TeamMember teamMember) {
-        Main.console.writeLn("\n > Manage Team Members > Edit Team Member (ID: " + teamMember.getId() + ") \n");
+        Main.console.println("\n > Manage Team Members > Edit Team Member (ID: " + teamMember.getId() + ") \n");
 
         String name;
         name = Main.console.waitStringOrEmpty("Team Member's name? [" + teamMember.getName() + "]\n", "", teamMember.getName());
@@ -170,7 +161,7 @@ public class UC2UI {
         List<Date[]> timeSlots;
         String editTimeSlotsOption;
         editTimeSlotsOption = Main.console.waitString("Do you want to edit time slots? [y/n]", "Please choose one!");
-        if(null == editTimeSlotsOption || editTimeSlotsOption.toLowerCase().equals("y")) {
+        if (null == editTimeSlotsOption || editTimeSlotsOption.toLowerCase().equals("y")) {
             showTimeSlotsForm();
             timeSlots = getTimeSlots();
         } else {
@@ -179,7 +170,7 @@ public class UC2UI {
 
         Main.root.addOrChangeTeamMember(teamMember.getId(), name, timeSlots);
 
-        Main.console.writeLn("\n### Team Member updated with ID: " + teamMember.getId() + " ###\n");
+        Main.console.println("\n### Team Member updated with ID: " + teamMember.getId() + " ###\n");
 
         return 0;
     }

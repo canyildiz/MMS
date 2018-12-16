@@ -28,3 +28,4 @@ mms.dat
 nbproject/
 build/**/.netbeans*
 /build/
+/dist/
