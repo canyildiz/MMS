@@ -118,4 +118,12 @@ public class Console {
         }
         return Date.from(Instant.MIN);
     }
+    
+    public void writeLn(String str) {
+        System.out.println(str);
+    }
+    
+    public void write(String str) {
+        System.out.print(str);
+    }
 }
