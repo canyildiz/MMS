@@ -24,7 +24,7 @@ hs_err_pid*
 
 #mac
 .DS_Store
-mms.dat
+mms*.dat
 nbproject/
 build/**/.netbeans*
 /build/

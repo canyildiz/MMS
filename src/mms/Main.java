@@ -6,7 +6,7 @@ import mms.ui.*;
 
 public class Main {
 
-    public static final String FILENAME = "mms.dat";
+    public static final String FILENAME = "mmsv2.dat";
     public static MMS controller;
     public static mms.ui.Console console = new mms.ui.Console();
 
@@ -23,8 +23,9 @@ public class Main {
                     + "Maintenance Management System\n"
                     + "-----------------------------\n"
                     + "1. Manage Equipments\n"
-                    + "2. Manage Team Members\n\n"
-                    + "(0 for save and exit)\n", new int[]{0, 1, 2}, "");
+                    + "2. Manage Team Members\n"
+                    + "3. Manage Corrective Maintenance Requests\n\n"
+                    + "(0 for save and exit)\n", new int[]{0, 1, 2, 3}, "");
 
             switch (ret) {
                 case 1:
@@ -34,6 +35,10 @@ public class Main {
                 case 2:
                     UC2UI uc2 = new UC2UI();
                     ret = uc2.mainMenu();
+                    break;
+                case 3:
+                    UC3UI uc3 = new UC3UI();
+                    ret = uc3.mainMenu();
                     break;
                 default:
                     return;

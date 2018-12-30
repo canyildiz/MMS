@@ -91,6 +91,46 @@ public class Console {
         return ret;
     }
 
+    public int waitIntOrEmpty(String text, String emptyInput, int currentValue) {
+        System.out.print(text);
+        System.out.println("Current Value: " + currentValue);
+
+        String ret = scanner.next();
+        if (ret.equals(emptyInput)) {
+            return currentValue;
+        }
+
+        return Integer.parseInt(ret);
+    }
+
+    public int waitIntOrEmpty(String text, int[] validEntries, String emptyInput, int currentValue, String invalidMsg) {
+        if (invalidMsg.isEmpty()) {
+            invalidMsg = "\n!Invalid entry, try again";
+        }
+
+        System.out.print(text);
+        System.out.println("Current Value: " + currentValue);
+
+        String ret = scanner.next();
+        if (ret.equals(emptyInput)) {
+            return currentValue;
+        }
+
+        if (ret.matches("^-?\\d+$")) {
+            int intRet = Integer.parseInt(ret);
+            for (int i = 0; i < validEntries.length; i++) {
+                if (validEntries[i] == intRet) {
+                    return intRet;
+                }
+            }
+            System.out.println(invalidMsg);
+        } else {
+            System.out.println(invalidMsg);
+        }
+
+        return currentValue;
+    }
+
     public Date waitDate(String text, String format, String invalidMsg, String emptyInput, Date currentValue) {
         if (invalidMsg.isEmpty()) {
             invalidMsg = "\n!Invalid date entry, try again in " + format + " format";
@@ -117,5 +157,13 @@ public class Console {
             }
         }
         return Date.from(Instant.MIN);
+    }
+
+    public void waitMessage(String message) {
+        System.out.print("\n\n" + message + "\n(enter to proceed)");
+        try {
+            System.in.read(new byte[2]);
+        } catch (Exception e) {
+        }
     }
 }

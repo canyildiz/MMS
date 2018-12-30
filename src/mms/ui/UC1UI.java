@@ -17,7 +17,7 @@ public class UC1UI {
                     + "2. Create New Equipment\n"
                     + "-----------------------------\n"
                     + "(-1 for return to main menu)\n"
-                    + "(0 for save and exit)\n", new int[]{0, 1, 2, 3}, "");
+                    + "(0 for save and exit)\n", new int[]{-1, 0, 1, 2}, "");
 
             switch (ret) {
                 case 1:
@@ -37,12 +37,18 @@ public class UC1UI {
     }
 
     public int listMenu() {
+        if (Main.controller.getEquipments().isEmpty()) {
+            Main.console.waitMessage("There is no equipment record!");
+            return 0;
+        }
+
         int ret = 0;
         while (ret >= 0) {
             List<Integer> validEntries = new ArrayList<Integer>();
 
             String list = "\n"
                     + " > Manage Equipments > List Equipments\n"
+                    + "Select one of the record below\n"
                     + "-----------------------------\n";
 
             Map<Integer, Equipment> equipments = Main.controller.getEquipments();
@@ -130,7 +136,7 @@ public class UC1UI {
                 return 0;
             case 1:
                 Main.controller.deleteEquipment(equipment.getEquipmentID());
-                Main.console.println("Deleted!");
+                Main.console.waitMessage("Record Deleted!");
                 return 0;
         }
         return ret;
@@ -174,9 +180,9 @@ public class UC1UI {
 
         Main.controller.addOrChangeEquipment(Id, name, lastMaintenanceDate, lastErrorCode);
         if (equipment == null) {
-            Main.console.println("### Created ###");
+            Main.console.waitMessage("Record Created");
         } else {
-            Main.console.println("### Edit Completed ###");
+            Main.console.waitMessage("Record Changed");
         }
         return 0;
     }
