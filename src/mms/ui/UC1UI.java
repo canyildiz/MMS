@@ -17,7 +17,7 @@ public class UC1UI {
                     + "2. Create New Equipment\n"
                     + "-----------------------------\n"
                     + "(-1 for return to main menu)\n"
-                    + "(0 for save and exit)\n", new int[]{0, 1, 2, 3}, "");
+                    + "(0 for save and exit)\n", new int[]{-1, 0, 1, 2}, "");
 
             switch (ret) {
                 case 1:
@@ -37,15 +37,21 @@ public class UC1UI {
     }
 
     public int listMenu() {
+        if (Main.controller.getEquipments().isEmpty()) {
+            Main.console.waitMessage("There is no equipment record!");
+            return 0;
+        }
+
         int ret = 0;
         while (ret >= 0) {
             List<Integer> validEntries = new ArrayList<Integer>();
 
             String list = "\n"
                     + " > Manage Equipments > List Equipments\n"
+                    + "Select one of the record below\n"
                     + "-----------------------------\n";
 
-            Map<Integer, Equipment> equipments = Main.root.getEquipments();
+            Map<Integer, Equipment> equipments = Main.controller.getEquipments();
             for (Map.Entry<Integer, Equipment> equipment : equipments.entrySet()) {
                 list += String.format("%3d. %-15s\n", equipment.getKey(), equipment.getValue().getEquipmentName());
                 validEntries.add(equipment.getKey());
@@ -129,7 +135,8 @@ public class UC1UI {
             case -1:
                 return 0;
             case 1:
-                Main.root.deleteEquipment(equipment.getEquipmentID());
+                Main.controller.deleteEquipment(equipment.getEquipmentID());
+                Main.console.waitMessage("Record Deleted!");
                 return 0;
         }
         return ret;
@@ -164,14 +171,19 @@ public class UC1UI {
                     + "-----------------------------\n"
                     + "Enter the required values regarding its data type\n"
                     + "(type * for keep the current values)\n");
-            
+
             Id = equipment.getEquipmentID();
             name = Main.console.waitStringOrEmpty("\nName (String):", "*", equipment.getEquipmentName());
             lastMaintenanceDate = Main.console.waitDate("\nLast Maintenance Date (Date in yyyy-mm-dd):\n", "yyyy-MM-dd", "", "*", equipment.getLastMaintenanceDate());
             lastErrorCode = Main.console.waitInt("\nLast Error Code:", "");
         }
 
-        Main.root.addOrChangeEquipment(Id, name, lastMaintenanceDate, lastErrorCode);
+        Main.controller.addOrChangeEquipment(Id, name, lastMaintenanceDate, lastErrorCode);
+        if (equipment == null) {
+            Main.console.waitMessage("Record Created");
+        } else {
+            Main.console.waitMessage("Record Changed");
+        }
         return 0;
     }
 }
