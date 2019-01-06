@@ -10,6 +10,7 @@ public class MaintenanceRequest implements java.io.Serializable {
     private String description;
     private int equipmentId = -1;
     private int priority = -1;
+    private MaintenanceSchedule schedule = null;
 
     public MaintenanceRequest(int Id) {
         maintenanceID = Id;
@@ -53,6 +54,18 @@ public class MaintenanceRequest implements java.io.Serializable {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public MaintenanceSchedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(MaintenanceSchedule schedule) {
+        this.schedule = schedule;
+    }
+
+    public boolean isScheduled() {
+        return this.schedule != null;
     }
 
 }
