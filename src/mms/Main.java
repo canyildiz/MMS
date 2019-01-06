@@ -24,8 +24,9 @@ public class Main {
                     + "-----------------------------\n"
                     + "1. Manage Equipments\n"
                     + "2. Manage Team Members\n"
-                    + "3. Manage Corrective Maintenance Requests\n\n"
-                    + "(0 for save and exit)\n", new int[]{0, 1, 2, 3}, "");
+                    + "3. Manage Corrective Maintenance Requests\n"
+                    + "4. Manage Corrective Maintenance Schedules\n\n"
+                    + "(0 for save and exit)\n", new int[]{0, 1, 2, 3, 4}, "");
 
             switch (ret) {
                 case 1:
@@ -39,6 +40,10 @@ public class Main {
                 case 3:
                     UC3UI uc3 = new UC3UI();
                     ret = uc3.mainMenu();
+                    break;
+                case 4:
+                    UC4UI uc4 = new UC4UI();
+                    ret = uc4.mainMenu();
                     break;
                 default:
                     return;

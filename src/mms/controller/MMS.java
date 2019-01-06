@@ -1,6 +1,7 @@
 package mms.controller;
 
 import java.util.*;
+import mms.model.MaintenanceSchedule;
 import mms.model.Equipment;
 import mms.model.MaintenanceRequest;
 import mms.model.TeamMember;
@@ -11,11 +12,13 @@ public class MMS implements java.io.Serializable {
     Map<Integer, Equipment> equipments;
     Map<Integer, TeamMember> teamMembers;
     Map<Integer, MaintenanceRequest> maintenanceRequests;
+    Map<Integer, MaintenanceSchedule> maintenanceSchedules;
 
     public MMS() {
         equipments = new HashMap<>();
         teamMembers = new HashMap<>();
         maintenanceRequests = new HashMap<>();
+        maintenanceSchedules = new HashMap<>();
     }
 
     // <editor-fold defaultstate="collapsed" desc="TEAM MEMBERS">
@@ -44,6 +47,22 @@ public class MMS implements java.io.Serializable {
         teamMember.setName(name);
         teamMember.setTimeSlots(timeSlotsToAdd);
         teamMembers.put(id, teamMember);
+    }
+
+    public List<TeamMember> getAvailableTeamMembers(Date dueDate) {
+        List<TeamMember> retVal = new ArrayList<>();
+
+        for (Map.Entry<Integer, TeamMember> item : teamMembers.entrySet()) {
+            TeamMember tm = item.getValue();
+            List<TimeSlot> timeSlots = tm.getTimeSlots();
+            for (TimeSlot ts : timeSlots) {
+                if (ts.getEndTime().before(dueDate)) {
+                    retVal.add(tm);
+                    break;
+                }
+            }
+        }
+        return retVal;
     }
     // </editor-fold>
 
@@ -75,7 +94,7 @@ public class MMS implements java.io.Serializable {
         equipments.remove(id);
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="CORRECTIVE MAINTENANCE REQUESTS">
     public Map<Integer, MaintenanceRequest> getMaintenanceRequests() {
         return maintenanceRequests;
@@ -104,5 +123,58 @@ public class MMS implements java.io.Serializable {
     public void deleteMaintenanceRequest(int id) {
         maintenanceRequests.remove(id);
     }
+
+    public List<MaintenanceRequest> getWaitingRequests() {
+        List<MaintenanceRequest> retVal = new ArrayList<>();
+        for (Map.Entry<Integer, MaintenanceRequest> item : maintenanceRequests.entrySet()) {
+            MaintenanceRequest req = item.getValue();
+            if (!req.isScheduled()) {
+                retVal.add(req);
+            }
+        }
+        return retVal;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="CORRECTIVE MAINTENANCE SCHEDULES">
+    public Map<Integer, MaintenanceSchedule> getMaintenanceSchedules() {
+        return maintenanceSchedules;
+    }
+
+    public MaintenanceSchedule getMaintenanceSchedule(int id) {
+        return maintenanceSchedules.get(id);
+    }
+
+    public void deleteMaintenanceSchedule(int id) {
+        for (Map.Entry<Integer, MaintenanceRequest> item : maintenanceRequests.entrySet()) {
+            MaintenanceRequest req = item.getValue();
+            if (req.getSchedule() != null && req.getSchedule().getId() == id) {
+                req.setSchedule(null);
+            }
+        }
+        maintenanceSchedules.remove(id);
+    }
+
+    public void addOrChangeMaintenanceSchedule(int id, Date dueDate, MaintenanceRequest request, List<TeamMember> teamMembers) {
+        MaintenanceSchedule schedule;
+
+        if (maintenanceSchedules.containsKey(id)) {
+            schedule = getMaintenanceSchedule(id);
+        } else {
+            schedule = new MaintenanceSchedule(id);
+        }
+
+        schedule.setDueDate(dueDate);
+        schedule.setTeamMembers(teamMembers);
+
+        if (schedule.getMaintenanceRequest() != null && !schedule.getMaintenanceRequest().equals(request)) {
+            schedule.getMaintenanceRequest().setSchedule(null);
+        }
+
+        schedule.setMaintenanceRequest(request);
+        request.setSchedule(schedule);
+        maintenanceSchedules.put(id, schedule);
+    }
+
     // </editor-fold>
 }

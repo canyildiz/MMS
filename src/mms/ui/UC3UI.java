@@ -96,9 +96,9 @@ public class UC3UI {
                     + "-----------------------------\n"
                     + "(0 for save and exit)\n"
                     + "(1 for previous menu)\n"
-                    + "(2 for create new equipment)\n"
-                    + "(3 for edit this equipment)\n"
-                    + "(4 for delete this equipment)\n";
+                    + "(2 for create new request)\n"
+                    + "(3 for edit this request)\n"
+                    + "(4 for delete this request)\n";
 
             ret = Main.console.waitInt(details, new int[]{0, 1, 2, 3, 4}, "");
             switch (ret) {
@@ -122,11 +122,11 @@ public class UC3UI {
         String details = "\n"
                 + " > Manage MaintenanceRequests > Delete MaintenanceRequest\n"
                 + "-----------------------------\n"
-                + "Are you sure to delete this equipment?\n"
+                + "Are you sure to delete this request?\n"
                 + "Id: " + request.getMaintenanceID() + "\n"
                 + "Description: " + request.getDescription() + "\n"
                 + "-----------------------------\n"
-                + "(1 for delete the equipment)\n"
+                + "(1 for delete the request)\n"
                 + "(-1 for previous menu)\n"
                 + "(0 for save and exit)\n";
 
@@ -146,8 +146,8 @@ public class UC3UI {
 
     public int createOrEditMenu(MaintenanceRequest request) {
         if (Main.controller.getEquipments().isEmpty()) {
-            Main.console.waitMessage("ERROR: There is no equipment records available!"
-                    + "\nPlease create the equipment records first.");
+            Main.console.waitMessage("ERROR: There is no request records available!"
+                    + "\nPlease create the request records first.");
             return 0;
         }
 
